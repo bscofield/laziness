@@ -1,0 +1,20 @@
+Laziness
+========
+
+Laziness does one thing: if your application throws an unhandled error, it will automatically create a failing test for you to copy into the appropriate test file.
+
+
+Example
+=======
+
+Say you're browsing your site and you get a 500 error on /users/new, which is rendering the UsersController#new action. In the error page (or exception email, if you're using ExceptionNotifier), Laziness adds the following:
+
+# put me in users_controller_test.rb!
+def test_lazy_test_for_users_new_should_not_throw_exception
+  assert_nothing_raised do
+    get :new, {[params from request]}, {[session from request]}, {[cookies from request]}
+  end
+end
+
+
+Copyright (c) 2008 Ben Scofield, released under the MIT license
