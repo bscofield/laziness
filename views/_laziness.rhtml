@@ -8,8 +8,8 @@ session = @request.session.instance_variable_get(:@data) || {}
 flash   = session.delete('flash') || {}
 cookies = @request.cookies        || {}
 -%>
-def test_<%= @request.method.to_s %>_<%= @controller.controller_name %>_<%= @controller.action_name %>_should_not_raise_exception
-  assert_nothing_raised do
+def test_<%= @request.method.to_s %>_<%= @controller.controller_name %>_<%= @controller.action_name %>_should_not_raise_<%= @exception.class.name.downcase %>_exception
+  assert_nothing_raised(<%= @exception.class.name %>) do
     <%= @request.method.to_s %> :<%= @controller.action_name %>, <%= params.inspect %>, <%= session.inspect %>, <%= flash.inspect %>, <%= cookies.inspect %>
   end
 end
