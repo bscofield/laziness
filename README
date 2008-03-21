@@ -11,7 +11,7 @@ Say you're browsing your site and you get a 500 error on /users/new, which is re
 
 def test_lazy_test_for_users_new_should_not_throw_nameerror_exception
   assert_nothing_raised(NameError) do
-    get :new, {[params from request]}, {[session from request]}, {[cookies from request]}
+    get :new, {[params from request]}, {[session from request]}, {[flash from request]}, {[cookies from request]}
   end
 end
 
