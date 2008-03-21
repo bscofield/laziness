@@ -12,7 +12,14 @@ module Laziness
         @template.send!(:assign_variables_from_controller)
 
         contents  = @template.render_file(template_path_for_local_rescue(exception), false)
-        test      = Laziness.generate_test(exception, request.method.to_s, params, session.instance_variable_get(:@data), cookies)
+        test      = "
+<h2 style='margin-top:30px;'>Laziness Test</h2>
+
+<pre>
+#{Laziness.generate_test(exception, request.method.to_s, params, session.instance_variable_get(:@data), cookies)}
+</pre>
+"
+        
         @template.instance_variable_set("@contents", contents + test)
 
         response.content_type = Mime::HTML
@@ -26,16 +33,15 @@ module Laziness
     action     = params.delete(:action)
     params     = params || {}
     flash      = session.delete('flash') || {}
+    
+    test_name = ['test_', method, controller, action, 'should_not_raise', exception.class.name, 'exception'].join('_')
+    test_name = test_name.downcase.gsub(/[^\w\d]/, '_').squeeze('_')
 "
-<h2 style='margin-top:30px;'>Laziness Test</h2>
-
-<pre>
-def test_#{method}_#{controller}_#{action}_should_not_raise_#{exception.class.name.downcase}_exception
+def #{test_name}
   assert_nothing_raised(#{exception.class.name}) do
     #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}, #{cookies.inspect}
   end
 end
-</pre>
 "
   end
 end
