@@ -34,14 +34,27 @@ module Laziness
     params     = params || {}
     flash      = session.delete('flash') || {}
     
-    test_name = ['test_', method, controller, action, 'should_not_raise', exception.class.name, 'exception'].join('_')
+    test_name = [method, controller, action, 'should not raise', exception.class.name, 'exception'].join(' ')
     test_name = test_name.downcase.gsub(/[^\w\d]/, '_').squeeze('_')
+
+    if File.exists?("#{RAILS_ROOT}/spec/spec_helper.rb")
+      return "
+describe \"Handling #{method.upcase} #{controller} #{action}\" do
+  it \"should not raise #{exception.class.name}\" do
+    lambda { 
+      #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}, #{cookies.inspect}
+    }.should_not raise_error(#{exception.class.name})
+  end
+end
 "
-def #{test_name}
+    else
+      return "
+def test_#{test_name}
   assert_nothing_raised(#{exception.class.name}) do
     #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}, #{cookies.inspect}
   end
 end
 "
+    end
   end
 end
