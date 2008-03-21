@@ -42,7 +42,7 @@ module Laziness
 describe \"Handling #{method.upcase} #{controller} #{action}\" do
   it \"should not raise #{exception.class.name}\" do
     lambda { 
-      #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}, #{cookies.inspect}
+      #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}
     }.should_not raise_error(#{exception.class.name})
   end
 end
@@ -51,7 +51,7 @@ end
       return "
 def test_#{test_name}
   assert_nothing_raised(#{exception.class.name}) do
-    #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}, #{cookies.inspect}
+    #{method} :#{action}, #{params.inspect}, #{session.inspect}, #{flash.inspect}
   end
 end
 "
