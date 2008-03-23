@@ -1,6 +1,6 @@
 module Laziness
   module ExceptionNotifier
-    ::ExceptionNotifier.sections << 'laziness'
+    ::ExceptionNotifier.sections << 'laziness' if File.exists?("#{RAILS_ROOT}/vendor/plugins/exception_notification/init.rb")
   end
   
   module ActionController
