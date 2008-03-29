@@ -29,6 +29,11 @@ module Laziness
   end
 
   def self.generate_test(exception, method, params = {}, session = {}, cookies = {})
+    tester = eval("Laziness::Exceptions::#{exception.class.name}") rescue Laziness
+    tester.test(exception, method, params, session)
+  end
+  
+  def self.test(exception, method, params, session)
     controller = params.delete(:controller)
     action     = params.delete(:action)
     params     = params || {}
@@ -58,3 +63,5 @@ end
     end
   end
 end
+
+Dir.glob(File.join(File.dirname(__FILE__), 'exceptions', '**', '*.rb')).each {|f| require f} 
