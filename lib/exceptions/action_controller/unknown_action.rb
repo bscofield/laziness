@@ -10,7 +10,7 @@ module Laziness
           if File.exists?("#{RAILS_ROOT}/spec/spec_helper.rb")
 # TODO: validate that this spec works as expected
             return "
-describe \"Lazy #{controller_class}\" do
+describe #{controller_class} do
   it \"should have the action #{action}\" do
     #{controller_class}.action_methods.should include('#{action}')
   end
