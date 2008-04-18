@@ -34,7 +34,7 @@ end
 Catching Specific Exceptions
 ============================
 
-You can customize the tests to be generated on an exception-by-exception basis; just add the appropriate file to lib/exceptions/what/ever.rb and make sure it includes a ++test++ class method; look at lib/exceptions/action_controller/unknown_view.rb for an example.
+You can customize the tests to be generated on an exception-by-exception basis; just add the appropriate file to lib/exceptions/what/ever.rb and make sure it defines ++test++ and ++spec++ methods; look at lib/exceptions/action_controller/unknown_view.rb for an example.
 
 
 Copyright (c) 2008 Ben Scofield, released under the MIT license
