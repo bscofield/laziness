@@ -9,7 +9,7 @@ class StandardError
     self.controller = params.delete(:controller)
     self.action     = params.delete(:action)
     self.params     = params || {}
-    self.flash      = session.delete('flash') || {}
+    self.flash      = session.delete('flash') || {} rescue {}
     self.session    = session
 
     test_name = [self.method, self.controller, self.action, 'should not raise', self.class.name, 'exception'].join(' ')
